@@ -1,0 +1,58 @@
+version: '3'
+services:
+
+    rabbit:
+        image: rabbitmq
+        ports:
+            - "15672:15672"
+
+    controller:
+        image: controller
+        build:
+            context: ./controller
+        ports:
+            - "3000:4000"
+        environment:
+            RABBIT_PASSWORD: "guest"
+            RABBIT_USER: "guest"
+            RABBIT_HOST: "rabbit"
+            RABBIT_PORT: "5672"
+            PYTHONUNBUFFERED: 1
+            ENV: 1
+            FLASK_APP: controller.py
+            FLASK_DEBUG: 1
+            PYTHONUNBUFFERED: 1
+
+    fetch:
+        image: fetchservice
+        build:
+            context: ./fetch
+        environment:
+            RABBIT_PASSWORD: "guest"
+            RABBIT_USER: "guest"
+            RABBIT_HOST: "rabbit"
+            RABBIT_PORT: "5672"
+            PYTHONUNBUFFERED: 1
+
+    add:
+        image: addservice
+        build:
+            context: ./add
+        environment:
+            RABBIT_PASSWORD: "guest"
+            RABBIT_USER: "guest"
+            RABBIT_HOST: "rabbit"
+            RABBIT_PORT: "5672"
+            PYTHONUNBUFFERED: 1
+
+    delete:
+        image: delservice
+        build:
+            context: ./delete
+        environment:
+            RABBIT_PASSWORD: "guest"
+            RABBIT_USER: "guest"
+            RABBIT_HOST: "rabbit"
+            RABBIT_PORT: "5672"
+            PYTHONUNBUFFERED: 1
+
