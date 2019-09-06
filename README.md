@@ -1,4 +1,4 @@
-Ibotta Dev Project
+Ibotta Dev Project.
 =========
 
 # Information
